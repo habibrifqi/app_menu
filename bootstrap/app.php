@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CanCheck;
+use App\Http\Middleware\CanCreateUser;
 use App\Http\Middleware\CanOrder;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -19,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
          $middleware->alias([
             'can_check' => CanCheck::class,
             'can_order' => CanOrder::class,
+            'Can_create_user' => CanCreateUser::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

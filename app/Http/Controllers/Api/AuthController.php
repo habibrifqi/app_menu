@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-     public function login(Request $request)
+    public function login(Request $request)
     {
         $request->validate([
             'email'    => 'required|email',
@@ -24,12 +24,26 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken('api-token')->plainTextToken;
+        // Sembunyikan field yang tidak ingin ditampilkan
+        $user->makeHidden(['remember_token', 'created_at', 'updated_at', 'deleted_at']);
 
+        $user->tokens()->delete();
+
+        $token = $user->createToken('api-token')->plainTextToken;
         return response()->json([
-            'user'  => $user,
-            'token' => $token,
-            'type'  => 'Bearer'
+            'data' => [
+                'user'  => $user,
+                'token' => $token,
+                'type'  => 'Bearer',
+            ],
+        ]);
+    }
+
+    public function me(Request $request){
+        $user = auth()->user();
+        $user->makeHidden(['remember_token', 'created_at', 'updated_at', 'deleted_at']);
+        return response()->json([
+            'data' => $user
         ]);
     }
 }
