@@ -14,17 +14,15 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::statement('SET session_replication_role = replica');
+        DB::statement('SET CONSTRAINTS ALL DEFERRED');
 
         Role::truncate();
-        \App\Models\Role::insert([
-            ['name' => 'waiterss'],
-            ['name' => 'chashier'],
-            ['name' => 'chef'],
-            ['name' => 'manager'],
+
+        Role::insert([
+            ['name' => 'admin', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'kasir', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'waiter', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'dapur', 'created_at' => now(), 'updated_at' => now()],
         ]);
-
-        DB::statement('SET session_replication_role = origin');
-
     }
 }

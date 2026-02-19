@@ -15,14 +15,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Seeder harus dijalankan dengan urutan yang benar karena foreign key dependencies
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            RoleSeeder::class,          // 1. Roles dulu (untuk users)
+            RestaurantSeeder::class,    // 2. Restaurant (untuk meja & kategori)
+            MejaSeeder::class,          // 3. Meja (untuk orders)
+            KategoriSeeder::class,      // 4. Kategori (untuk items)
+            ItemSeeder::class,          // 5. Items (untuk order_details)
+            UserSeeder::class,          // 6. Users (untuk orders)
+        ]);
 
-        //   $this->call(RoleSeeder::class);
-        //   $this->call(UserSeeder::class);
+        $this->command->info('✅ Semua data berhasil di-seed!');
+        $this->command->info('📊 Summary:');
+        $this->command->info('   - 4 Roles');
+        $this->command->info('   - 1 Restaurant');
+        $this->command->info('   - 10 Meja');
+        $this->command->info('   - 10 Kategori');
+        $this->command->info('   - 10 Items');
+        $this->command->info('   - 10 Users');
     }
 }
