@@ -17,6 +17,10 @@ return new class extends Migration
             $table->unsignedBigInteger('item_id');
             $table->softDeletes();
 
+            $table->integer('quantity');
+            $table->decimal('harga_satuan', 12, 2);
+            $table->text('catatan')->nullable();
+            $table->decimal('subtotal', 14, 2);
 
             $table->timestamps();
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');

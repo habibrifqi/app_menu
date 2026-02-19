@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ItemController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,4 +30,6 @@ Route::middleware(['auth:sanctum', 'can_check'])
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/items', [ItemController::class, 'store']);
     Route::put('/items/{id}', [ItemController::class, 'update']);
+
+    Route::post('/orders', [OrderController::class, 'store']);
 });

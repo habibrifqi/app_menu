@@ -11,21 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('riwayat_status', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->integer('price');
-            $table->string('image');
-            $table->unsignedBigInteger('kategori_id');
-            $table->softDeletes();
-
+            $table->unsignedBigInteger('orders_id');
+            $table->string('status');
+            $table->timestamp('timestamp');
             $table->timestamps();
 
-            $table->foreign('kategori_id')
+            $table->foreign('orders_id')
                 ->references('id')
-                ->on('kategoris')
+                ->on('orders')
                 ->onDelete('cascade');
-
         });
     }
 
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('riwayat_status');
     }
 };

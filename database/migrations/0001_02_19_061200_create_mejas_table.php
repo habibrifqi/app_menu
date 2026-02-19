@@ -11,21 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('mejas', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->integer('price');
-            $table->string('image');
-            $table->unsignedBigInteger('kategori_id');
-            $table->softDeletes();
-
+            $table->unsignedBigInteger('restoran_id');
+            $table->string('nomor_meja');
+            $table->string('qr_code')->nullable();
             $table->timestamps();
 
-            $table->foreign('kategori_id')
+            $table->foreign('restoran_id')
                 ->references('id')
-                ->on('kategoris')
+                ->on('restaurants')
                 ->onDelete('cascade');
-
         });
     }
 
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('mejas');
     }
 };
